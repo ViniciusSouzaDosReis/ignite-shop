@@ -1,9 +1,8 @@
-import { styled } from "../../styles"
-import { HomeContainer, Product } from "../../styles/pages/home"
-import Image from "next/future/image"
+import Image from 'next/future/image'
+
+import { HomeContainer, Product } from '../../styles/pages/home'
 import camiseta1 from '../assets/camisetas/+PLUS-T-shirttransparente 1.png'
 import camiseta2 from '../assets/camisetas/2_explorer-t-shirt 1.png'
-
 
 export default function Home() {
   return (
