@@ -19,6 +19,7 @@ interface ProductProps {
     imageUrl: string
     price: string
     description: string
+    defaultPriceId: string
   }
 }
 
@@ -82,6 +83,7 @@ export const getStaticProps: GetStaticProps<
           currency: 'BRL',
         }),
         description: product.description,
+        defaultPriceId: price.id,
       },
     },
 
