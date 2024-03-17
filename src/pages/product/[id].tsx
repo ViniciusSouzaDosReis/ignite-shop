@@ -1,7 +1,8 @@
 // import { useRouter } from 'next/router'
 
-import { GetStaticProps } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 import Image from 'next/future/image'
+import { useRouter } from 'next/router'
 import Stripe from 'stripe'
 
 import {
@@ -16,12 +17,18 @@ interface ProductProps {
     id: string
     name: string
     imageUrl: string
-    price: number
+    price: string
     description: string
   }
 }
 
 export default function Product({ product }: ProductProps) {
+  const { isFallback } = useRouter()
+
+  if (isFallback) {
+    return <p>Loading...</p>
+  }
+
   return (
     <ProductContainer>
       <ImageContainer>
@@ -45,6 +52,13 @@ export default function Product({ product }: ProductProps) {
   )
 }
 
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [{ params: { id: 'prod_PkEudRdhHuD9nQ' } }],
+    fallback: true,
+  }
+}
+
 export const getStaticProps: GetStaticProps<
   ProductProps,
   { id: string }
@@ -63,7 +77,10 @@ export const getStaticProps: GetStaticProps<
         id: product.id,
         name: product.name,
         imageUrl: product.images[0],
-        price: price.unit_amount / 100,
+        price: (price.unit_amount / 100).toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        }),
         description: product.description,
       },
     },

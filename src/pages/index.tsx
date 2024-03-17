@@ -36,12 +36,7 @@ export default function Home({ products }: HomeProps) {
 
               <footer>
                 <strong>{product.name}</strong>
-                <span>
-                  {product.price.toLocaleString('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL',
-                  })}
-                </span>
+                <span>{product.price}</span>
               </footer>
             </Product>
           </Link>
@@ -63,7 +58,10 @@ export const getStaticProps: GetStaticProps = async () => {
       id: product.id,
       name: product.name,
       imageUrl: product.images[0],
-      price: price.unit_amount / 100,
+      price: (price.unit_amount / 100).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      }),
     }
   })
 
@@ -71,6 +69,6 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       products,
     },
-    revalidate: 60 * 60 * 2, // 2 hour
+    revalidate: 60 * 60 * 1, // 1 hour
   }
 }
